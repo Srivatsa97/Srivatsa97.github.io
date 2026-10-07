@@ -1,0 +1,364 @@
+<title>Sri Jamadagni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Caveat:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #000000;
+    --bg-1: #0b0b0c;
+    --bg-2: #131315;
+    --line: #1e1e21;
+    --line-2: #2b2b30;
+    --ink: #ffffff;
+    --ink-2: #9a9aa2;
+    --ink-3: #63636b;
+    --accent: #ff7d3c;
+    --accent-ink: #1a0d04;
+    --disp: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+    --script: 'Caveat', 'Segoe Script', cursive;
+    --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    margin: 0; color: var(--ink); font-family: var(--sans);
+    line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding-inline: 24px; padding-block: 0; }
+  a { color: var(--accent); text-decoration: none; }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+  .hl { color: var(--accent); }
+  .script { font-family: var(--script); color: var(--accent); font-weight: 600; }
+
+  /* scroll progress */
+  #progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 60; transition: width .1s linear; }
+
+  /* reveal — visible by default; only html.anim parks below-fold sections */
+  html.anim .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.22,.61,.36,1), transform .6s cubic-bezier(.22,.61,.36,1); transition-delay: calc(var(--i, 0) * 70ms); will-change: opacity, transform; }
+  html.anim .reveal.shown { opacity: 1; transform: none; }
+
+  /* NAV */
+  nav { position: sticky; top: env(safe-area-inset-top,0px); z-index: 40; background: rgba(0,0,0,.72); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .nav-in { max-width: 840px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; }
+  .nav-in .logo { font-family: var(--disp); font-weight: 800; font-size: 20px; letter-spacing: -.02em; margin-right: auto; }
+  .nav-in .logo .d { color: var(--accent); }
+  .nav-in a.link { font-family: var(--mono); font-size: 12px; color: var(--ink-2); }
+  .nav-in a.link:hover { color: var(--ink); }
+  @media (max-width: 640px){ .nav-in a.link { display: none; } .nav-in a.link.keep { display: inline; } }
+
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+
+  /* HERO */
+  .hero { padding: 74px 0 30px; }
+  .avail { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .avail .live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px 1px var(--accent); animation: beat 2.8s ease-out infinite; }
+  @keyframes beat { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .hero h1 { font-family: var(--disp); font-weight: 800; font-size: clamp(50px, 11vw, 96px); line-height: .95; letter-spacing: -.035em; margin: 20px 0 0; }
+  .hero h1 .script { font-weight: 700; font-size: 1.02em; letter-spacing: 0; }
+  .hero .say { font-size: clamp(20px, 3vw, 28px); font-weight: 600; line-height: 1.38; margin: 26px 0 0; max-width: 24ch; color: var(--ink); text-wrap: balance; letter-spacing: -.01em; }
+  .hero .say .sub2 { display: block; color: var(--ink-2); font-weight: 400; font-size: clamp(16px,2.3vw,20px); margin-top: 12px; max-width: 32ch; letter-spacing: 0; }
+  .hero .loc { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 26px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .hero .loc b { color: var(--ink-2); font-weight: 400; }
+
+  /* METRICS */
+  .metrics { display: flex; flex-wrap: wrap; gap: 28px 44px; margin-top: 46px; padding-top: 34px; border-top: 1px solid var(--line); }
+  .metric .n { font-family: var(--disp); font-weight: 800; font-size: clamp(32px,6vw,46px); line-height: .9; letter-spacing: -.03em; }
+  .metric .n .u { color: var(--accent); }
+  .metric .l { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 10px; letter-spacing: .04em; max-width: 16ch; }
+
+  /* SECTION */
+  section { padding: 62px 0; border-top: 1px solid var(--line); }
+  .stitle { font-family: var(--disp); font-weight: 800; font-size: clamp(32px,6vw,54px); line-height: 1; margin: 12px 0 0; letter-spacing: -.03em; }
+  .stitle .script { font-size: 1.18em; letter-spacing: 0; }
+  .slead { color: var(--ink-2); font-size: 16px; margin-top: 16px; max-width: 58ch; }
+
+  /* ABOUT */
+  .story { margin-top: 22px; font-size: 18px; line-height: 1.68; color: var(--ink-2); max-width: 60ch; }
+  .story b { color: var(--ink); font-weight: 600; }
+  .story p { margin: 0 0 16px; }
+  .story p:last-child { margin-bottom: 0; }
+
+  .seats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 30px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .seat { background: var(--bg-1); padding: 20px 18px; }
+  .seat .sn { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .06em; }
+  .seat .st { font-family: var(--disp); font-weight: 700; font-size: 19px; margin: 8px 0 8px; letter-spacing: -.02em; }
+  .seat p { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+  @media (max-width: 620px){ .seats { grid-template-columns: 1fr; } }
+
+  /* TRAITS — compact grid, "enough" in the hand */
+  .traits { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .trait { background: var(--bg-1); padding: 20px 20px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .trait .k { font-family: var(--disp); font-weight: 700; font-size: clamp(18px,3.2vw,23px); color: var(--ink); letter-spacing: -.02em; }
+  .trait .k .en { font-family: var(--script); font-weight: 600; color: var(--accent); font-size: 1.32em; letter-spacing: 0; }
+  .trait .v { font-size: 14.5px; color: var(--ink-2); font-weight: 400; line-height: 1.45; }
+  @media (max-width: 560px){ .traits { grid-template-columns: 1fr; } }
+
+  /* WORK */
+  .xp { margin-top: 26px; display: flex; flex-direction: column; gap: 30px; }
+  .xh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .xh .co { font-family: var(--disp); font-weight: 800; font-size: 24px; letter-spacing: -.03em; }
+  .xh .when { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .xrole { font-size: 13px; color: var(--accent); font-family: var(--mono); margin-bottom: 12px; }
+  .xp ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .xp li { font-size: 16px; color: var(--ink-2); padding-left: 22px; position: relative; line-height: 1.5; }
+  .xp li::before { content:""; position: absolute; left: 2px; top: 11px; width: 8px; height: 1px; background: var(--accent); }
+  .xp li b { color: var(--ink); font-weight: 600; }
+
+  /* BUILDS */
+  .builds { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .build { background: var(--bg-1); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .build .bh { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .build h3 { font-family: var(--disp); font-weight: 700; font-size: 21px; margin: 0; flex: 1; letter-spacing: -.02em; }
+  .bstat { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+  .bstat.now { color: var(--accent); border: 1px solid rgba(255,125,60,.4); background: rgba(255,125,60,.08); }
+  .bstat.next { color: var(--ink-3); border: 1px solid var(--line-2); }
+  .build p { margin: 0 0 14px; font-size: 15.5px; color: var(--ink-2); line-height: 1.55; }
+  .build p b { color: var(--ink); font-weight: 600; }
+  .build .tech { display: flex; flex-wrap: wrap; gap: 6px; }
+  .build .tech span { font-family: var(--mono); font-size: 11px; color: var(--ink-2); border: 1px solid var(--line-2); padding: 3px 9px; border-radius: 6px; }
+  .honesty { margin-top: 22px; font-size: 15px; color: var(--ink-2); line-height: 1.6; padding-left: 18px; border-left: 2px solid var(--accent); }
+  .honesty b { color: var(--ink); }
+
+  /* STACK */
+  .stack { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
+  .srow { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: baseline; }
+  .srow .sl { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+  .srow .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--ink-2); border: 1px solid var(--line-2); padding: 3px 10px; border-radius: 7px; }
+  .tag.d { border-style: dashed; color: var(--ink-3); }
+  @media (max-width: 560px){ .srow { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* LIFE */
+  .life { margin-top: 24px; display: flex; flex-direction: column; }
+  .lintro { font-size: 18px; color: var(--ink-2); margin: 0 0 8px; max-width: 58ch; }
+  .lintro b { color: var(--ink); font-weight: 600; }
+  .lrow { display: grid; grid-template-columns: 200px 1fr; gap: 18px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .lrow .lt { font-family: var(--disp); font-weight: 700; font-size: 20px; letter-spacing: -.02em; line-height: 1.05; }
+  .lrow .lt .em { font-family: var(--script); font-weight: 600; color: var(--accent); font-size: 1.24em; }
+  .lrow p { margin: 0; font-size: 15.5px; color: var(--ink-2); line-height: 1.55; }
+  .lrow p b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 560px){ .lrow { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* CONTACT */
+  .contact { padding-bottom: 40px; }
+  .contact h2 { font-family: var(--disp); font-weight: 800; font-size: clamp(38px,10vw,84px); line-height: .95; margin: 16px 0 0; letter-spacing: -.035em; }
+  .contact h2 .script { font-size: 1.12em; letter-spacing: 0; }
+  .contact p { color: var(--ink-2); font-size: 17px; max-width: 52ch; margin: 18px 0 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .cta a { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; padding: 14px 24px; border-radius: 10px; }
+  .cta .primary { background: var(--accent); color: var(--accent-ink); }
+  .cta .primary:hover { background: #ff9256; }
+  .cta .ghost { border: 1px solid var(--line-2); color: var(--ink); }
+  .cta .ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 46px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .04em; }
+
+  @media (prefers-reduced-motion: reduce){ .avail .live { animation: none; } }
+</style>
+
+<script>/* add early so below-fold sections don't flash before the observer runs */
+  try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim'); } catch(e){}
+</script>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="logo">Sri<span class="d">.</span></span>
+    <a class="link" href="#about">About</a>
+    <a class="link" href="#made">Made of</a>
+    <a class="link" href="#work">Work</a>
+    <a class="link" href="#build">Build</a>
+    <a class="link" href="#life">Life</a>
+    <a class="link keep" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO (always visible, no reveal) -->
+  <div class="hero">
+    <span class="avail"><span class="live"></span>Available to design what can't fail, and de-risk what might</span>
+    <h1>Hello, I'm <span class="script">Sri</span>.</h1>
+    <p class="say">I'm who enterprises call when the data <span class="hl">can't disappear</span> and the architecture <span class="hl">can't fail</span>.
+      <span class="sub2">Seven years of doing exactly that. Now I'm building the AI that comes next, in public.</span>
+    </p>
+    <div class="loc">
+      <span><b>◆</b> Bangalore, India</span>
+      <span><b>◆</b> Enterprise Solutions Architect</span>
+    </div>
+    <div class="metrics">
+      <div class="metric reveal" style="--i:0"><div class="n">7<span class="u">yr</span></div><div class="l">enterprise pre-sales</div></div>
+      <div class="metric reveal" style="--i:1"><div class="n">$100M<span class="u">+</span></div><div class="l">revenue contributed</div></div>
+      <div class="metric reveal" style="--i:2"><div class="n">52<span class="u">%</span></div><div class="l">deal win rate</div></div>
+      <div class="metric reveal" style="--i:3"><div class="n">60<span class="u">+</span></div><div class="l">workshops delivered</div></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <span class="eyebrow reveal">About</span>
+    <h2 class="stitle reveal">The short <span class="script">version</span></h2>
+    <div class="story reveal">
+      <p>Seven years as the technical person in enterprise deals, first at <b>Dell</b>, now <b>Commvault</b>. The one they pull in when the architecture diagram has more arrows than sense.</p>
+      <p>Somewhere I stopped pitching products and started designing answers: data protection, multi-cloud, cyber resilience. Then I got restless about AI, so I stopped talking and started building. This page is the receipts, honest edges and all.</p>
+    </div>
+    <div class="seats">
+      <div class="seat reveal" style="--i:0"><div class="sn">01</div><div class="st">Cloud SA</div><p>Multi-cloud on AWS + Azure. VPC, IAM, DR, Zero Trust, Well-Architected.</p></div>
+      <div class="seat reveal" style="--i:1"><div class="sn">02</div><div class="st">AI SA</div><p>RAG, agents, governance. Daily production use of Claude, GPT, Copilot, plus live builds.</p></div>
+      <div class="seat reveal" style="--i:2"><div class="sn">03</div><div class="st">Pre-Sales SA</div><p>Discovery to close. $1M+ influenced, 52% win rate, 60+ workshops.</p></div>
+    </div>
+  </section>
+
+  <!-- MADE OF -->
+  <section id="made">
+    <span class="eyebrow reveal">What I'm made of</span>
+    <h2 class="stitle reveal">Not a tool <span class="script">list</span></h2>
+    <div class="traits">
+      <div class="trait reveal" style="--i:0"><span class="k">Technical <span class="en">enough</span></span><span class="v">to earn the architect's trust in the room.</span></div>
+      <div class="trait reveal" style="--i:1"><span class="k">Commercial <span class="en">enough</span></span><span class="v">to close the deal, not just design it.</span></div>
+      <div class="trait reveal" style="--i:2"><span class="k">Curious <span class="en">enough</span></span><span class="v">to build with AI, not just demo it.</span></div>
+      <div class="trait reveal" style="--i:3"><span class="k">Steady <span class="en">enough</span></span><span class="v">to run the recovery when it's genuinely on fire.</span></div>
+      <div class="trait reveal" style="--i:4"><span class="k">Honest <span class="en">enough</span></span><span class="v">to tell you what I haven't shipped yet.</span></div>
+      <div class="trait reveal" style="--i:5"><span class="k">Relentless <span class="en">enough</span></span><span class="v">to keep leveling up, three certs in flight right now.</span></div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <span class="eyebrow reveal">Work</span>
+    <h2 class="stitle reveal">The <span class="script">receipts</span></h2>
+    <div class="xp">
+      <div class="xp-item reveal">
+        <div class="xh"><span class="co">Commvault</span><span class="when">Jul 2023 — Now</span></div>
+        <div class="xrole">Solutions Architect (Inside Sales Engineer)</div>
+        <ul>
+          <li>Architect multi-cloud data protection across <b>AWS and Azure</b> for enterprises from India to EMEA, and influenced <b>$1M+</b> in revenue doing it.</li>
+          <li>Get into customers' real environments (EC2, S3, VMs, Kubernetes), design the protection, and stay through implementation.</li>
+          <li>Built AI tools with Copilot that made my own team <b>~40% faster</b>, and ran a <b>Clumio AWS mass-recovery game day</b> to prove recovery at scale.</li>
+        </ul>
+      </div>
+      <div class="xp-item reveal">
+        <div class="xh"><span class="co">Dell</span><span class="when">Oct 2019 — Jul 2023</span></div>
+        <div class="xrole">Inside Product Specialist (Pre-Sales)</div>
+        <ul>
+          <li>Won more than half the enterprise deals I chased with the US team. <b>29 shots, 52% landed, $100M+</b> in revenue. Two awards for it.</li>
+          <li>Ran demos, feasibility and architecture across VxRail, VMware and enterprise storage, the trusted-technical-voice role before the title existed.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILD -->
+  <section id="build">
+    <span class="eyebrow reveal">What I build</span>
+    <h2 class="stitle reveal">I build it, not just <span class="script">brief it</span></h2>
+    <p class="slead reveal">I only build what I actually know. So my AI work lives where my expertise does: cyber resilience and data protection.</p>
+    <div class="builds">
+      <div class="build reveal" style="--i:0">
+        <div class="bh"><h3>RAG Chatbot</h3><span class="bstat now">Working now</span></div>
+        <p>A retrieval pipeline over real data-protection documentation: load, chunk, embed, retrieve, generate. Ask it a cyber-resilience question and it answers with <b>grounded, cited</b> responses, retrieval verified against the source instead of hallucinated.</p>
+        <div class="tech"><span>LlamaIndex</span><span>ChromaDB</span><span>Voyage AI</span><span>Claude API</span><span>Python</span></div>
+      </div>
+      <div class="build reveal" style="--i:1">
+        <div class="bh"><h3>AI Evaluation Framework</h3><span class="bstat next">Building next</span></div>
+        <p>Scores whether an AI actually <b>holds up on enterprise cyber-resilience questions</b>, because "it sounds right" isn't good enough when recovery is on the line. Runs a question set, captures answers, scores them into a report.</p>
+        <div class="tech"><span>Claude API</span><span>Scoring logic</span><span>JSON / CSV</span></div>
+      </div>
+    </div>
+    <div class="honesty reveal">
+      <b>Straight about it:</b> my judgment in enterprise architecture, data protection and pre-sales is deep. On AI engineering I'm strong conceptually and building hands-on in the open. These builds are how I turn concept fluency into build fluency, grounded in what I actually know.
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <span class="eyebrow reveal">Stack</span>
+    <h2 class="stitle reveal">What I work <span class="script">with</span></h2>
+    <div class="stack">
+      <div class="srow reveal" style="--i:0"><div class="sl">cloud</div><div class="tags"><span class="tag">AWS · EC2/S3/IAM/VPC</span><span class="tag">Azure · Backup/ASR/AVS</span><span class="tag">Multi-cloud & hybrid</span><span class="tag">HA & DR</span></div></div>
+      <div class="srow reveal" style="--i:1"><div class="sl">resilience</div><div class="tags"><span class="tag">Cyber resilience</span><span class="tag">Ransomware recovery</span><span class="tag">Zero Trust</span><span class="tag">DLP / IAM / MFA</span></div></div>
+      <div class="srow reveal" style="--i:2"><div class="sl">applied ai</div><div class="tags"><span class="tag">RAG</span><span class="tag">Claude / GPT / Copilot</span><span class="tag">Agents & tool use</span><span class="tag">AI governance</span><span class="tag">Python</span></div></div>
+      <div class="srow reveal" style="--i:3"><div class="sl">certs</div><div class="tags"><span class="tag">AZ-900</span><span class="tag">VMware VTSP</span><span class="tag">Commvault SA/TSP/SP</span><span class="tag">Dell Cloud Architect</span><span class="tag d">AWS SAA-C03 · in prog</span><span class="tag d">AZ-104 · in prog</span></div></div>
+    </div>
+  </section>
+
+  <!-- LIFE -->
+  <section id="life">
+    <span class="eyebrow reveal">Off the clock</span>
+    <h2 class="stitle reveal">The rest of <span class="script">me</span></h2>
+    <p class="lintro reveal" style="margin-top:18px;">I do my best thinking on a trail or over a plate of something I've never tried before. Here's what fills the time when I'm not architecting.</p>
+    <div class="life">
+      <div class="lrow reveal" style="--i:0">
+        <div class="lt">Trekking <span class="em">the Himalayas</span></div>
+        <p>A couple of seasons in the high mountains, including <b>Goecha La in Sikkim</b>, the long, high-altitude trek to the foot of Kanchenjunga. The mountains taught me the thing that carries into the work: pick the harder route, pace yourself, keep moving when the terrain turns unfamiliar.</p>
+      </div>
+      <div class="lrow reveal" style="--i:1">
+        <div class="lt">On the <span class="em">road</span></div>
+        <p><b>Japan</b> for the culture and the precision. <b>Chicago and New York</b> for the pace and the scale. New places keep me curious and quick to settle into unfamiliar ground, which is most of what a solutions architect does anyway.</p>
+      </div>
+      <div class="lrow reveal" style="--i:2">
+        <div class="lt">A serious <span class="em">foodie</span></div>
+        <p>Forever hunting the next cuisine across <b>Bangalore's food scene</b>, and cooking my way through new dishes at home. I treat a recipe the way I treat an architecture, understand why it works, then push on it.</p>
+      </div>
+      <div class="lrow reveal" style="--i:3">
+        <div class="lt">Books &amp; <span class="em">good talk</span></div>
+        <p>Always reading something new, and I'll take a long, curious conversation over small talk any day. Most of what I know that isn't in a cert came from a book or a person worth listening to.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <span class="eyebrow reveal">Contact</span>
+    <h2 class="reveal">Let's talk <span class="script">architecture</span>.</h2>
+    <p class="reveal">Cloud, AI, or pre-sales. If you want someone who brings enterprise judgment and is building the hands-on depth in public, I'm around.</p>
+    <div class="cta reveal">
+      <a class="primary" href="mailto:srivatsa.jamadagni@gmail.com">Get in touch</a>
+      <a class="ghost" href="tel:+919986237729">Call ↗</a>
+      <a class="ghost" href="https://linkedin.com/in/srivatsa-v-jamadagni" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="reveal" style="margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.03em;">
+      srivatsa.jamadagni@gmail.com&nbsp;&nbsp;·&nbsp;&nbsp;+91 99862 37729
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap" style="padding-block:0;">Srivatsa V Jamadagni · Bangalore, India · © 2026</div>
+</footer>
+
+<script>
+  // scroll progress bar
+  (function(){
+    const bar = document.getElementById('progress');
+    function upd(){
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+      bar.style.width = (pct * 100) + '%';
+    }
+    window.addEventListener('scroll', upd, { passive: true });
+    window.addEventListener('resize', upd, { passive: true });
+    upd();
+  })();
+
+  // step-by-step reveal
+  (function(){
+    if (!document.documentElement.classList.contains('anim')) return; // reduced motion -> everything already visible
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { items.forEach(el => el.classList.add('shown')); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+    // safety: reveal anything still hidden after load (e.g. already on screen)
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => {
+        items.forEach(el => { const r = el.getBoundingClientRect(); if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('shown'); });
+      });
+    });
+  })();
+</script>
